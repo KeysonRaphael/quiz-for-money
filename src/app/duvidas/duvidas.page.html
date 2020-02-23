@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-row>
+    <ion-col text-right>
+        <ion-button routerLink="/captcha" style="text-align: right;">
+            <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-button routerLink="/carteira" style="text-align: right;">
+          <ion-icon name="wallet"></ion-icon>
+        </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title text-center>Retirada</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content text-justify>
+      <ion-text>
+      A retirada do dinheiro pode ser realizada a partir do 
+      momento que o usuário alcançar o valor de R${{valor}} (ISO 4217: BRL, abreviada como R$). 
+      Assim que alcançar este valor o usuário pode clicar no botão com o símbolo de uma carteira 
+      e selecionar o método de pagamento da sua preferência.
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title text-center>Tempo para o pagamento</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content text-justify>
+      <ion-text>
+      O pagamento para o usuário será realizado em até dois dias utéis, podendo ser realizado antes.
+      Os Pagamentos são realizados entre 06:00 ás 23:00.
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title text-center>Valor Ganho</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content text-justify>
+      <ion-text>
+      O valor pago nos prêmios são na base de decimo de centavo de real, 
+      como exemplo: 0.004 não equivale a 4 centavos, o valor que equivale a 4 centavos é 0.04.
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title text-center>Ainda não recebi o pagamento</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content text-justify>
+      <ion-text>
+      <p>Caso tenha realizado a solicitação de retirada com sucesso e se passaram os dois dias utéis, 
+      provavelmente ocorreu um erro ao digitar seu endereço de pagamento, 
+      caso este sejá o problema nossa equipe entrara em contato pelo e-mail cadastrado, para a atualização do canal de pagamento.</p>
+      <p>
+      Caso não tenha recebido nenhuma mensagem nossa, favor entrar em contato pelo e-mail:  <a [href]="'mailto:scriptblock.dev@gmail.com?Subject=Ainda não recebi o pagamento!'">scriptblock.dev@gmail.com</a>  
+      informando os detalhes(Valor, Canal de pagamento, email associado ao aplicativo) da retirada.</p>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

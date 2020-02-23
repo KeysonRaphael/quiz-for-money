@@ -1,0 +1,31 @@
+<ion-content>
+    <ion-img src="../../assets/35221.jpg"></ion-img>
+    <ion-item>
+        <ion-icon slot="start" name="person"></ion-icon>
+        <ion-input [(ngModel)]="nome" required type="text" placeholder="Nome"></ion-input>
+      </ion-item>   
+    <ion-item>
+      <ion-icon slot="start" name="at"></ion-icon>
+      <ion-input [(ngModel)]="email" required type="text" placeholder="Email"></ion-input>
+    </ion-item><ion-item>
+      <ion-icon slot="start" name="key"></ion-icon>
+      <ion-input required [(ngModel)]="senha" type="password" placeholder="Senha"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-icon slot="start" name="key"></ion-icon>
+        <ion-input required [(ngModel)]="rsenha" type="password" placeholder="Repita a senha"></ion-input>
+      </ion-item>
+    <div class="row" style="margin-top: 5%;">
+      <div text-center class="col">
+        <ion-button size="small" text-center (click)="cadastrar()">cadastrar</ion-button>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 5%;">
+      <div text-center class="col">
+        Já possui cadastro?
+        <br>
+        <ion-button size="small" style="margin-top: 5%;" routerLink="/home">Logar</ion-button>
+      </div>
+    </div>
+  </ion-content>
+  

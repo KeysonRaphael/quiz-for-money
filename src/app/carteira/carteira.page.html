@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-row>
+    <ion-col text-right>
+        <ion-button routerLink="/duvidas" style="text-align: right;">
+          <ion-icon name="help"></ion-icon>
+        </ion-button>
+        <ion-button routerLink="/captcha" style="text-align: right;">
+            <ion-icon name="create"></ion-icon>
+        </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content>
+  <ion-card text-center>
+    <ion-card-header>
+      <ion-card-subtitle><h2>CARTEIRA</h2></ion-card-subtitle>
+      <ion-card-title><h1>R${{total}}</h1></ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-text color="danger">
+        <h4 >Você só poderá retirar o dinheiro após obter a quantia mínima de R${{valor}}</h4>
+      </ion-text>
+      <form>
+        <ion-item>
+          <ion-icon slot="start" name="filing"></ion-icon>
+          <ion-select placeholder="Forma de Pagamento" (ionChange)="changePlace($event.target.value)" [(ngModel)]="formap" name="formap" style="max-width: 100% !important;">
+            <ion-select-option value="Mercado Pago">Mercado Pago</ion-select-option>
+            <ion-select-option value="PicPay">PicPay</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-icon slot="start" name="at"></ion-icon>
+          <ion-input required type="email" [(ngModel)]="conta" name="conta" placeholder="{{placeholder}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon slot="start" name="cash"></ion-icon>
+          <ion-input required type="text" maxlength="6" name="value" [(ngModel)]="value"  [brmasker]="{money: true, decimal: 2}" placeholder="Valor que deseja retirar"></ion-input>
+        </ion-item>
+        <ion-button size="small" style="margin-top: 5%;" (click)="retirarDinheiro()" color="success">Retirar</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

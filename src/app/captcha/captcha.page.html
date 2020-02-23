@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-row>
+    <ion-col align-self-center>
+      R${{total}}
+    </ion-col>
+    <ion-col text-right>
+        <ion-button routerLink="/duvidas" style="text-align: right;">
+          <ion-icon name="help"></ion-icon>
+        </ion-button>
+        <ion-button routerLink="/carteira" style="text-align: right;">
+            <ion-icon name="wallet"></ion-icon>
+        </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content>
+    <ion-select placeholder="Selecione o assunto" (ionChange)="getPerguntas($event.target.value)" name="formap" style="max-width: 100% !important;" interface="popover">
+      <ion-select-option value="0">Todos</ion-select-option>
+      <ion-select-option value="1">Matemática</ion-select-option>
+      <ion-select-option value="2">Português</ion-select-option>
+      <ion-select-option value="3">Biologia</ion-select-option>
+      <ion-select-option value="4">Geografia</ion-select-option>
+      <ion-select-option value="5">História</ion-select-option>
+      <ion-select-option value="6">Nerd</ion-select-option>
+    </ion-select>
+    <ion-row>
+      <ion-col size="9" offset="1" style="margin-top: 15px;"><ion-progress-bar color="success" value={{progress}}></ion-progress-bar></ion-col>
+      <ion-col><ion-icon color="warning" size="large" name="trophy"></ion-icon></ion-col>
+    </ion-row>
+    <br>
+  <div class="row">
+    <div text-center class="col">
+      <ion-card>
+        <ion-card-content text-center>
+            {{question}}
+            <br>
+        </ion-card-content>
+      </ion-card>
+      <ion-item text-center text-wrap name="button1" style="margin-top: 5%;" (click)="liberarPremio(button1)" color="primary">
+        <ion-label text-wrap>{{button1}}</ion-label>
+      </ion-item>
+      <ion-item text-center text-wrap name="button2" style="margin-top: 5%;" (click)="liberarPremio(button2)" color="primary">
+        <ion-label text-wrap>{{button2}}</ion-label>
+      </ion-item >
+      <ion-item text-center text-wrap name="button3" style="margin-top: 5%;" (click)="liberarPremio(button3)" color="primary">
+        <ion-label text-wrap>{{button3}}</ion-label>
+      </ion-item>
+      <ion-item text-center text-wrap name="button4" style="margin-top: 5%;" (click)="liberarPremio(button4)" color="primary">
+        <ion-label text-wrap>{{button4}}</ion-label>
+      </ion-item>
+      <ion-item text-center text-wrap name="button5" style="margin-top: 5%;" (click)="liberarPremio(button5)" color="primary">
+        <ion-label text-wrap>{{button5}}</ion-label>
+      </ion-item>
+      <br>
+    </div>
+  </div>
+</ion-content>
