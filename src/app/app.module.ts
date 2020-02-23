@@ -25,10 +25,11 @@ import { Market } from '@ionic-native/market/ngx';
 
 
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { AssuntosComponent} from './assuntos/assuntos.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent,AssuntosComponent],
+  entryComponents: [AssuntosComponent],
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     BrMaskerModule,
     IonicStorageModule.forRoot()],

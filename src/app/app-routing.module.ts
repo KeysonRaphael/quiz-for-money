@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path: 'duvidas',
     loadChildren: () => import('./duvidas/duvidas.module').then( m => m.DuvidasPageModule)
-  },
+  }
 ];
 
 @NgModule({

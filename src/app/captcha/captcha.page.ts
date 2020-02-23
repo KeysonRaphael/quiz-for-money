@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free/ngx';
 import { NavController, NavParams, ToastController } from '@ionic/angular';
 import { AdmobfreeService } from '../admobfree.service';
@@ -8,7 +8,9 @@ import { Events } from '@ionic/angular';
 import { NgZone } from "@angular/core";
 import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
-
+import { ModalController } from '@ionic/angular';
+import { IonContent } from '@ionic/angular';
+import { AssuntosComponent } from '../assuntos/assuntos.component';
 
 
 
@@ -19,6 +21,8 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./captcha.page.scss'],
 })
 export class CaptchaPage implements OnInit {
+  @ViewChild(IonContent,{static:true}) content: IonContent;
+
   public captcha = "";
   public total = "";
   public buttonText = "Proximo Captcha";
@@ -43,7 +47,7 @@ export class CaptchaPage implements OnInit {
   public progress = 0;
 
 
-  constructor(private alertController: AlertController,public loadingController: LoadingController,private zone: NgZone, public events: Events, private admobfreeService: AdmobfreeService, private storage: Storage, private toast: ToastController, private usersService: UsersService) { }
+  constructor(private alertController: AlertController,private modalController: ModalController,public loadingController: LoadingController,private zone: NgZone, public events: Events, private admobfreeService: AdmobfreeService, private storage: Storage, private toast: ToastController, private usersService: UsersService) { }
 
   ngOnInit() {
     this.getPerguntas("0");
@@ -84,6 +88,7 @@ export class CaptchaPage implements OnInit {
   }
 
   gerarPergunta(){
+      this.content.scrollToTop(1500);
       const intp = this.getRandomInt(0,Object.keys(this.perguntas).length);
       this.question = this.perguntas[intp].question;
       this.answer = this.perguntas[intp].answer;
@@ -149,6 +154,15 @@ export class CaptchaPage implements OnInit {
     this.loading.dismiss()
   }
 
+  async abrirModal(){
+    const subjectModal = await this.modalController.create({component:AssuntosComponent});
+    subjectModal.present();
+    const { data } = await subjectModal.onDidDismiss();
+    if (data.data) {
+      this.getPerguntas(data.data);
+    }
+  }
+
   async getPerguntas(subject:string){
     this.presentLoading();
     await this.usersService.getToken().then(async (result) => {
@@ -161,12 +175,12 @@ export class CaptchaPage implements OnInit {
     });
     this.gerarPergunta();
     this.dismissLoading();
-
   }
 
   liberarPremio(resposta:string){
     if (resposta == this.answer) { 
       this.gerarPergunta();
+      
       this.atual += 1;
       if (this.atual != 3) {
         this.presentConfirm("Resposta Correta!");

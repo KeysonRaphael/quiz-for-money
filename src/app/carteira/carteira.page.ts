@@ -61,16 +61,25 @@ export class CarteiraPage implements OnInit {
   }
 
   retirarDinheiro(){
-    if (parseFloat(this.value) < this.valor) {
-      alert("Valor mínimo de retirada é R$"+this.valor);
+    if(this.placeholder == ""){
+      this.presentConfirm("Escolha uma forma de pagamento!");
+      return;
+    }else if (this.conta == "" || this.conta == undefined) {
+      this.presentConfirm("Conta em branco!");
+      return;
+    }else if (this.conta[0] == "@" && this.formap == "Mercado Pago") {
+      this.presentConfirm("Contas Mercado Pago são em formato de e-mail!");
+      return;
+    }else if (this.conta[0] != "@" && this.formap == "PicPay") {
+      this.presentConfirm("Contas PicPay iniciam com @");
+      return;
+    }else if (parseFloat(this.value) < this.valor) {
+      this.presentConfirm("Valor mínimo de retirada é R$"+this.valor);
       return;
     }else if(parseFloat(this.total) < this.valor){
-      alert("Você não possui o valor mínimo de retirada!");
+      this.presentConfirm("Você não possui o valor mínimo de retirada!");
       return;
-    }else if(this.placeholder == ""){
-      alert("Escolha uma forma de pagamento!");
-      return;
-    }
+    } 
     var data = new Date(),
         dia  = data.getDate().toString(),
         diaF = (dia.length == 1) ? '0'+dia : dia,
@@ -89,6 +98,23 @@ export class CarteiraPage implements OnInit {
       });
     });
     this.dismissLoading();
+  }
+
+  async presentConfirm(mensagem) {
+    let text = 'Ok';
+    let alert = await this.alertController.create({
+      message: mensagem,
+      cssClass:"",
+      buttons: [
+        {
+          text: "OK",
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ],
+    });
+    alert.present();
   }
 
   async presentLoading() {
