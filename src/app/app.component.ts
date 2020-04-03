@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+declare var unityads2:any;
+
+
 
 @Component({
   selector: 'app-root',
@@ -19,15 +22,35 @@ export class AppComponent {
   ) {
     this.initializeApp();
   }
+  
+  @HostListener('document:ionBackButton', ['$event'])
+  overrideHardwareBackAction(event: any) {
+    console.log('back button');
+    event.detail.register(100, async () => {
+      event.stopImmediatePropagation();
+      event.stopPropagation();
+      event.preventDefault();
+    });
+  }
 
   initializeApp() {
     this.platform.ready().then(() => {
+      var gameId = "3463129";
+      var isTest = false;
+      var isDebug = false;
+      unityads2.UnityAdsInit(gameId, isTest, isDebug, function callback(error, result){           
+        if(error){
+            console.log(error)
+        }
+        else{
+            console.log(result);
+        }
+    });
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
-
       if (this.platform.is('cordova')) {
         this.setupPush();
       }
+      this.splashScreen.hide();
     });
   }
 
@@ -55,6 +78,8 @@ export class AppComponent {
  
     this.oneSignal.endInit();
   }
+
+  
 
   async showAlert(title, msg, task) {
     const alert = await this.alertCtrl.create({

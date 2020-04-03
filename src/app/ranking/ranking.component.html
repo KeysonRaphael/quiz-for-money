@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-row>
+    <ion-col>
+      <ion-button (click)="voltar()" style="text-align: right;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col text-center>
+      <h3>RANKING</h3>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+</ion-header>
+<ion-content>
+  <ion-row text-center>
+    <ion-col>
+      <ion-button expand="full" (click)="abrirPremiacao()">
+        Premiação
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button expand="full" (click)="abrirDuvidas()">
+        Dúvidas
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <h2 text-center>Prêmio {{month}}</h2>
+  <marquee behavior=scroll><h3 text-center>{{premio}}</h3></marquee>
+  <img src="../../assets/trophy.jpg" width="33%" height="20%"/>
+  <img src="http://157.245.38.22/primeiro.jpg" width="33%" height="20%"/>
+  <img src="../../assets/trophy.jpg" width="33%" height="20%"/>
+  <ion-list *ngFor="let player of rank">
+    <ion-item *ngIf="player.rank == 1">
+      <!-- <h2>{{player.rank}}</h2> -->
+      <img src="../../assets/primeiro.jpg" width="30%" height="60%"/>
+      <ion-label style="padding-left: 5%;">{{player.nome}}</ion-label>
+      {{player.money}}
+    </ion-item>
+    <ion-item *ngIf="player.rank == 2">
+      <img src="../../assets/segundo.jpg" width="30%" height="60%"/>
+      <ion-label style="padding-left: 5%;padding-top: 2%;">{{player.nome}}</ion-label>
+      {{player.money}}
+    </ion-item>
+    <ion-item *ngIf="player.rank == 3">
+      <img src="../../assets/terceiro.jpg" width="30%" height="60%"/>
+      <ion-label style="padding-left: 5%;padding-top: 2%;">{{player.nome}}</ion-label>
+      {{player.money}}
+    </ion-item>
+    <ion-item *ngIf="player.rank != 1 && player.rank != 2 && player.rank != 3">
+      <h2 style="margin-left: 10%;">{{player.rank}}</h2>
+      <ion-label style="padding-left: 20%;padding-top: 2%;">{{player.nome}}</ion-label>
+      {{player.money}}
+    </ion-item>
+</ion-list>
+</ion-content>

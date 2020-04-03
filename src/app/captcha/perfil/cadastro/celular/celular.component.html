@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-row>
+    <ion-col>
+      <ion-button (click)="voltar()" style="text-align: right;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col text-center>
+      <h3>Celular</h3>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col>
+    </ion-col>
+  </ion-row>
+</ion-header>
+<ion-content>
+  <ion-item>
+    <ion-input text-center required [brmasker]="{mask:'(00) 00000-0000', len:15}" id="celular" type="text" placeholder="Celular"></ion-input>
+  </ion-item>
+  <ion-row text-center  style="margin-top: 5%;">
+    <ion-col></ion-col>
+    <ion-col><ion-button (click)="cadastrarCelular()">Cadastrar Celular</ion-button></ion-col>
+  <ion-col></ion-col>
+  </ion-row>
+</ion-content>

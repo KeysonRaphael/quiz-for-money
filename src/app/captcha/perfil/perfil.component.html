@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-row>
+    <ion-col>
+      <ion-button (click)="voltar()" style="margin-top: 10%;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col text-center>
+      <h3>Perfil</h3>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col style="margin-right: -2%;">
+      <ion-button color="danger" (click)="sair()" style="margin-right: -10%;margin-top: 10%;">
+        <ion-icon name="exit"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-header>
+<ion-content>
+  <ion-row text-center>
+    <ion-col>
+      <ion-button expand="full" (click)="abrirPontuacao()">
+        Pontuação
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-card color="secondary">
+    <ion-row text-center>
+      <ion-col>
+        <h4 >{{nome}}</h4>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <b>Celular</b>
+      </ion-col>
+      <ion-col  size="8">
+        <b>{{celular}}</b>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+      <b>Endereço</b>
+      </ion-col>
+      <ion-col  size="8">
+        <b>{{endereco}}</b>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <b>E-mail</b>
+      </ion-col>
+      <ion-col size="8">
+        <b>{{email}}</b>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-row text-center>
+    <ion-col>
+      <ion-card color="secondary" text-center>
+        <h6>Seguidores</h6>
+        <h3>{{seguidores}}</h3>
+      </ion-card>
+    </ion-col>
+    <ion-col>
+      <ion-card color="secondary" text-center>
+        <h6>Compartilhar</h6>
+        <ion-button color="success" (click)="compartilhar()">
+          <ion-icon name="logo-whatsapp"></ion-icon>
+        </ion-button>
+        <ion-button color="medium" (click)="compartilharTodos()">
+          <ion-icon name="shuffle"></ion-icon>
+        </ion-button>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row text-center><ion-col><b>ATUALIZAR</b></ion-col></ion-row>
+  <ion-row text-center>
+    <ion-col>
+      <ion-button expand="full" (click)="abrirEndereco()">
+        Endereço
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button expand="full" (click)="abrirCelular()">
+        Celular
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

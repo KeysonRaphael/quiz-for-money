@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-row>
+    <ion-col>
+      <ion-button (click)="voltar()" style="text-align: right;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col text-center>
+      <h3>Endereço</h3>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col>
+    </ion-col>
+  </ion-row>
+</ion-header>
+<ion-content>
+  <ion-item>
+    <ion-select required id="estado" required type="text" placeholder="Selecion seu estado" (ionChange)="carregarCidades($event.target.value)" style="max-width: 100% !important;">
+      <ion-select-option *ngFor="let estado of estadoslist" value = "{{estado.id}}">{{estado.nome}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-select required id="cidade" required type="text" placeholder="Selecione sua cidade" style="max-width: 100% !important;" (ionChange)="setCidade($event.target.value)">
+      <ion-select-option *ngFor="let cidade of cidadeslist" value = "{{cidade.id}}">{{cidade.nome}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-input required id="bairro" type="text" placeholder="Bairro"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input required id="rua" type="text" placeholder="Rua"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input required id="numero" type="number" placeholder="Numero"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input required [brmasker]="{mask:'00.000-000', len:10}" id="cep" type="text" placeholder="CEP"></ion-input>
+  </ion-item>
+  <ion-row text-center  style="margin-top: 5%;">
+    <ion-col></ion-col>
+    <ion-col><ion-button (click)="cadastrarEndereco()">Cadastrar Endereço</ion-button></ion-col>
+  <ion-col></ion-col>
+  </ion-row>
+</ion-content>

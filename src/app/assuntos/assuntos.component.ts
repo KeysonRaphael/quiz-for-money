@@ -12,8 +12,12 @@ export class AssuntosComponent implements OnInit {
 
   ngOnInit() {}
 
-  escolher(assunto) {
-    this.modalCtrl.dismiss({ data: assunto });
+  escolher(assunto, gerar) {
+    this.modalCtrl.dismiss({ data: assunto, data2: gerar });
+  }
+
+  voltar(){
+    this.modalCtrl.dismiss();
   }
 
 }

@@ -11,6 +11,9 @@ import { AlertController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { IonContent } from '@ionic/angular';
 import { AssuntosComponent } from '../assuntos/assuntos.component';
+import { RankingComponent } from '../ranking/ranking.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { GruposComponent } from '../grupos/grupos.component';
 
 
 
@@ -45,13 +48,24 @@ export class CaptchaPage implements OnInit {
   public erro = 0;
   public loading;
   public progress = 0;
+  public subject = '0';
 
 
-  constructor(private alertController: AlertController,private modalController: ModalController,public loadingController: LoadingController,private zone: NgZone, public events: Events, private admobfreeService: AdmobfreeService, private storage: Storage, private toast: ToastController, private usersService: UsersService) { }
+  constructor(private alertController: AlertController,private modalController: ModalController,
+    public loadingController: LoadingController,private zone: NgZone, 
+    public events: Events, private admobfreeService: AdmobfreeService, 
+    private storage: Storage, private toast: ToastController, 
+    private usersService: UsersService) { 
+      events.subscribe('upGrana', (user, time) => {
+        this.getgrana();
+      });
+    }
 
   ngOnInit() {
-    this.getPerguntas("0");
-    this.showBanner();
+    this.getPerguntas("0").then((result)=>{
+      this.gerarPergunta();
+      }
+    );
     this.getgrana();
   }
 
@@ -61,20 +75,22 @@ export class CaptchaPage implements OnInit {
       this.usersService.getGrana(this.token).then((result: any) => {
         this.zone.run(() => {
           this.total = result.money;
+          this.total = Number(this.total).toFixed(4)
+          this.total = this.total.replace('.',',')
         });
       });
     });
     return this.total;
   }
 
-  showBanner(){
-    this.admobfreeService.BannerAd();
+  private addPontuacao(subject, status) {
+    this.usersService.getToken().then((result) => {
+      this.token = result;
+      this.usersService.addPontuacao(this.token,subject,status).then((result: any) => {
+      });
+    });
+    return this.total;
   }
-
-  showInterstitial(){
-    this.admobfreeService.InterstitialAd();
-  }
-  
   showRewardVideo(){
     this.admobfreeService.RewardVideoAd();
   }
@@ -88,8 +104,9 @@ export class CaptchaPage implements OnInit {
   }
 
   gerarPergunta(){
+      this.getPerguntas(this.subject);
       this.content.scrollToTop(1500);
-      const intp = this.getRandomInt(0,Object.keys(this.perguntas).length);
+      const intp = 0;
       this.question = this.perguntas[intp].question;
       this.answer = this.perguntas[intp].answer;
       this.false1 = this.perguntas[intp].false1;
@@ -111,8 +128,9 @@ export class CaptchaPage implements OnInit {
       }
       
       while (listab.length>0){
-        const intb = this.getRandomInt(0,listab.length-1);
-        const intr = this.getRandomInt(0,listar.length-1);
+        const intb = this.getRandomInt(0,listab.length);
+        const intr = this.getRandomInt(0,listar.length);
+        console.log(intb);
         this.zone.run(() => {
           switch (listab[intb]) {
             case 1:
@@ -122,9 +140,7 @@ export class CaptchaPage implements OnInit {
               this.button2 = listar[intr];
               break;
             case 3:
-              
               this.button3 = listar[intr];
-              console.log(listar[intr]);
               break;
             case 4:
               this.button4 = listar[intr];
@@ -159,11 +175,27 @@ export class CaptchaPage implements OnInit {
     subjectModal.present();
     const { data } = await subjectModal.onDidDismiss();
     if (data.data) {
-      this.getPerguntas(data.data);
+      this.getPerguntas(data.data,1);
     }
   }
 
-  async getPerguntas(subject:string){
+  async abrirRank(){
+    const subjectModal = await this.modalController.create({component:RankingComponent});
+    subjectModal.present();
+  }
+
+  async abrirGrupos(){
+    const subjectModal = await this.modalController.create({component:GruposComponent});
+    subjectModal.present();
+  }
+
+  async abrirPerfil(){
+    const subjectModal = await this.modalController.create({component:PerfilComponent});
+    subjectModal.present();
+  }
+
+  async getPerguntas(subject:string,gerar = 0){
+    this.subject = subject; 
     this.presentLoading();
     await this.usersService.getToken().then(async (result) => {
       this.token = result;
@@ -171,16 +203,17 @@ export class CaptchaPage implements OnInit {
       await this.usersService.getPerguntas(this.token, subject).then( async (result: any) => {
         console.log(result);
         this.perguntas = result;
+        if(gerar == 1){
+          this.gerarPergunta();
+        }
       });
     });
-    this.gerarPergunta();
     this.dismissLoading();
   }
 
   liberarPremio(resposta:string){
-    if (resposta == this.answer) { 
-      this.gerarPergunta();
-      
+    if (resposta == this.answer) {
+      this.addPontuacao(this.subject,'1')       
       this.atual += 1;
       if (this.atual != 3) {
         this.presentConfirm("Resposta Correta!");
@@ -189,16 +222,15 @@ export class CaptchaPage implements OnInit {
       if (this.atual == 3) {
         this.presentConfirm("Parabéns, você respondeu 3 perguntas corretamente e receberá seu prêmio!", 1);
         this.atual = 0;
-        this.progress = 0; 
+        this.progress = 0;
       }
     }else{
       this.erro +=1;
+      this.addPontuacao(this.subject,'0') 
       if (this.erro == 3){
         this.erro = 0;
-        this.showInterstitial();
       }
       this.presentConfirm("<p>Resposta Incorreta</p> <p>A resposta correta é: "+this.answer+"</p>");
-      this.gerarPergunta();
     }
   }
 
@@ -217,10 +249,8 @@ export class CaptchaPage implements OnInit {
           handler: () => {
             if (nq == 1) {
               this.showRewardVideo()
-              this.usersService.getGrana(this.token).then((result: any) => {
-                this.total = result.money;
-              });
             }
+            this.gerarPergunta()
           }
         }
       ],

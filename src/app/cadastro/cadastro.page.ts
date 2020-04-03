@@ -15,7 +15,9 @@ export class CadastroPage implements OnInit {
   public email = "";
   public nome = "";
   public senha = "";
+  public termos = false;
   public rsenha = "";
+  public mestre = "";
   public loading;
 
   constructor(public loadingController: LoadingController,private router: Router, private userProvider: UsersService, private toast: ToastController) {
@@ -27,6 +29,14 @@ export class CadastroPage implements OnInit {
       message: 'Por favor aguarde...',
     });
     await this.loading.present();
+  }
+
+  aceitar(){
+    if(this.termos ==false){
+      this.termos = true;
+    }else{
+      this.termos = false;
+    }
   }
 
   dismissLoading(){
@@ -43,7 +53,8 @@ export class CadastroPage implements OnInit {
       this.model.senha = this.senha;
       this.model.nome = this.nome;
       this.model.rsenha = this.rsenha;
-      this.userProvider.createAccount(this.model.email,this.model.senha,this.model.nome)
+      this.model.mestre = this.mestre;
+      this.userProvider.createAccount(this.model.email,this.model.senha,this.model.nome,this.model.mestre)
       .then((result: any) => {
         this.dismissLoading();        
         this.router.navigateByUrl('/home');
@@ -58,7 +69,10 @@ export class CadastroPage implements OnInit {
   public validar(){
     var letters = /^[A-Za-z çãé]+$/;
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (this.nome.length < 2) {
+    if(this.termos == false){
+      alert('Você deve aceitar os termos de uso!');
+      return "0";
+    }else if (this.nome.length < 2) {
       alert('Nome Incorreto!');
       return "0";
     }else if(!this.nome.match(letters)){
@@ -83,4 +97,5 @@ export class User {
   senha: string;
   rsenha: string;
   nome : string;
+  mestre : string;
 }

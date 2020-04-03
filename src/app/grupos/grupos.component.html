@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-row>
+    <ion-col>
+      <ion-button (click)="voltar()" style="text-align: right;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col text-center>
+      <h3>Grupos</h3>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col>
+    </ion-col>
+  </ion-row>
+</ion-header>
+<ion-content>
+  <ion-row text-center>
+    <ion-col>
+      <ion-button expand="full" (click)="abrirHistorico()">
+        Histórico de Participações
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-list text-center *ngFor="let grupo of grupos">
+    <ion-card class="ion-padding" (click)="presentConfirm('',grupo.premio,grupo.valor,grupo.id)">
+      <b>
+        <h1 style="margin-bottom: 0px!important;"><p style="margin-bottom: 0px!important;">Prêmio R${{grupo.premio}}</p></h1>
+        <p *ngIf="grupo.premio == '50,0000'" ><ion-text color="medium">(Cinquenta reais)</ion-text></p>
+        <p *ngIf="grupo.premio == '20,0000'" ><ion-text color="medium">(Vinte reais)</ion-text></p>
+        <p *ngIf="grupo.premio == '10,0000'" ><ion-text color="medium">(Dez reais)</ion-text></p>
+        <ion-row text-center>
+          <ion-col>Tickets Disponiveis</ion-col>
+          <ion-col>{{grupo.tickets}}</ion-col>
+        </ion-row>
+        <ion-row text-center>
+          <ion-col>Valor do Ticket</ion-col>
+          <ion-col>R${{grupo.valor}}</ion-col>
+        </ion-row>
+        <p *ngIf="grupo.status == '1'"><ion-text color="success">Em Andamento</ion-text></p>
+        <p *ngIf="grupo.status == '2'">Fechado</p>
+      </b>
+    </ion-card>
+  </ion-list>
+</ion-content>

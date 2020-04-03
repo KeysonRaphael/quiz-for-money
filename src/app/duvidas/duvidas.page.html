@@ -1,12 +1,16 @@
 <ion-header>
   <ion-row>
-    <ion-col text-right>
-        <ion-button routerLink="/captcha" style="text-align: right;">
-            <ion-icon name="create"></ion-icon>
-        </ion-button>
-        <ion-button routerLink="/carteira" style="text-align: right;">
-          <ion-icon name="wallet"></ion-icon>
-        </ion-button>
+    <ion-col>
+      <ion-button routerLink="/captcha" style="text-align: right;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col text-center>
+      <h3>Dúvidas</h3>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col>
     </ion-col>
   </ion-row>
 </ion-header>
@@ -23,6 +27,23 @@
       momento que o usuário alcançar o valor de R${{valor}} (ISO 4217: BRL, abreviada como R$). 
       Assim que alcançar este valor o usuário pode clicar no botão com o símbolo de uma carteira 
       e selecionar o método de pagamento da sua preferência.
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title text-center>Como funciona os Grupos?</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content text-justify>
+      <ion-text>
+        Os usuários que quiserem participar do sorteio nos grupos devem escolher 
+        o prêmio que desejam e confirmar o pagamento da taxa informada.
+        Quando o grupo é finalizado o usuario ganhador é divulgado na 
+        tela histórico de participações, que pode ser acessada pelo menu grupos 
+        e depois pressionando no botão "histórico de participações". Ao clicar em um grupo 
+        finalizado aparecerá o e-mail do usuário ganhador.
       </ion-text>
     </ion-card-content>
   </ion-card>
@@ -48,7 +69,21 @@
     <ion-card-content text-justify>
       <ion-text>
       O valor pago nos prêmios são na base de decimo de centavo de real, 
-      como exemplo: 0.004 não equivale a 4 centavos, o valor que equivale a 4 centavos é 0.04.
+      como exemplo: 0,004 não equivale a 4 centavos, o valor que equivale a 4 centavos é 0,04.
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title text-center>Valor Ganho por cada seguidor</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content text-justify>
+      <ion-text>
+      Você irá ganhar 10% de todo valor ganho dos seus seguidor. 
+      Como exemplo, se um de seus seguidores, fizer um prêmio de 0,005 você ganhará 0,0005.
+      Lembrando que usuarios não ativos(que receberam algum premio) semanalmente perderam seu seguidores. 
       </ion-text>
     </ion-card-content>
   </ion-card>
@@ -64,7 +99,8 @@
       provavelmente ocorreu um erro ao digitar seu endereço de pagamento, 
       caso este sejá o problema nossa equipe entrara em contato pelo e-mail cadastrado, para a atualização do canal de pagamento.</p>
       <p>
-      Caso não tenha recebido nenhuma mensagem nossa, favor entrar em contato pelo e-mail:  <a [href]="'mailto:scriptblock.dev@gmail.com?Subject=Ainda não recebi o pagamento!'">scriptblock.dev@gmail.com</a>  
+      Caso não tenha recebido nenhuma mensagem nossa, favor entrar em contato pelo e-mail:  <a [href]="'mailto:scriptblock.dev@gmail.com?Subject=Ainda não recebi o pagamento!'">scriptblock.dev@gmail.com</a>
+       ou pelo <a href="https://api.whatsapp.com/send?phone=5581995237140">WhatsApp</a>,  
       informando os detalhes(Valor, Canal de pagamento, email associado ao aplicativo) da retirada.</p>
       </ion-text>
     </ion-card-content>

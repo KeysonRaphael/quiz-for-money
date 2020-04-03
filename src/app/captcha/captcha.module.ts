@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { CaptchaPageRoutingModule } from './captcha-routing.module';
 
 import { CaptchaPage } from './captcha.page';
+import { BrMaskerModule } from 'br-mask';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule,BrMaskerModule,
     CaptchaPageRoutingModule
   ],
   declarations: [CaptchaPage]

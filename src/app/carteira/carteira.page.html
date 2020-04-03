@@ -1,17 +1,28 @@
 <ion-header>
   <ion-row>
-    <ion-col text-right>
-        <ion-button routerLink="/duvidas" style="text-align: right;">
-          <ion-icon name="help"></ion-icon>
-        </ion-button>
-        <ion-button routerLink="/captcha" style="text-align: right;">
-            <ion-icon name="create"></ion-icon>
-        </ion-button>
+    <ion-col>
+      <ion-button routerLink="/captcha" style="text-align: right;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col text-center>
+      <h3>Carteira</h3>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col>
     </ion-col>
   </ion-row>
 </ion-header>
 
 <ion-content>
+  <ion-row text-center>
+    <ion-col>
+      <ion-button expand="full" (click)="abrirHistorico()">
+        Histórico de Pagamentos
+      </ion-button>
+    </ion-col>
+  </ion-row>
   <ion-card text-center>
     <ion-card-header>
       <ion-card-subtitle><h2>CARTEIRA</h2></ion-card-subtitle>
@@ -27,6 +38,7 @@
           <ion-select placeholder="Forma de Pagamento" (ionChange)="changePlace($event.target.value)" [(ngModel)]="formap" name="formap" style="max-width: 100% !important;">
             <ion-select-option value="Mercado Pago">Mercado Pago</ion-select-option>
             <ion-select-option value="PicPay">PicPay</ion-select-option>
+            <ion-select-option value="PayPal">PayPal</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>

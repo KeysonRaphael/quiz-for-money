@@ -12,18 +12,17 @@ import {ToastController } from '@ionic/angular';
 import { CaptchaPage } from './captcha/captcha.page';
 import { Events } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+declare var unityads2:any;
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdmobfreeService {
-  interstitialConfig: AdMobFreeInterstitialConfig = {
-    // add your config here
-    // isTesting: true,
-    autoShow: false,
-      // id: "ca-app-pub-3940256099942544/1033173712"//false
-    id: "ca-app-pub-4664613025046676/3131421378"
-  };
+  reward = 0;
+  admob = true;
+  //unity
+  //admob
   //Reward Video Ad's Configurations
   RewardVideoConfig: AdMobFreeRewardVideoConfig = {
     // isTesting: true, // Remove in production
@@ -33,18 +32,24 @@ export class AdmobfreeService {
   };
 
   constructor(private alertController: AlertController,private admobFree: AdMobFree,
-    public platform: Platform, public events: Events, private dialogs: Dialogs, private toast: ToastController, private usersService: UsersService) {
+    public platform: Platform, public events: Events, private dialogs: Dialogs, 
+    private toast: ToastController, private usersService: UsersService) {
+      events.subscribe('atualizarGrana', (user, time) => {
+        this.newMethod();
+      });
+      events.subscribe('abrirAdmob', (user, time) => {
+        this.rewardvideoAdmob();
+      });
+
       platform.ready().then(() => {
-        //load face ads
-        // Load ad configuration
-        this.admobFree.interstitial.config(this.interstitialConfig);
-        //Prepare Ad to Show
-        this.admobFree.interstitial.prepare()
-          .then(() => {
-            // alert(1);
-          }).catch(e => alert(e));
-  
-  
+        document.addEventListener('startappads.reward_video.reward', () => {
+          this.newMethod();
+        });
+        
+        document.addEventListener('startappads.reward_video.load_fail', () => {
+          this.rewardvideoUnity(events);
+        });
+    
         // Load ad configuration
         this.admobFree.rewardVideo.config(this.RewardVideoConfig);
         //Prepare Ad to Show
@@ -53,12 +58,6 @@ export class AdmobfreeService {
             // alert(2);
           }).catch(e => alert(e));
   
-      });
-      //Handle interstitial's close event to Prepare Ad again
-      this.admobFree.on('admob.interstitial.events.CLOSE').subscribe(() => {
-        this.admobFree.interstitial.prepare()
-          .then(() => {
-          }).catch(e => alert(e));
       });
       //Handle Reward's close event to Prepare Ad again
       this.admobFree.on('admob.rewardvideo.events.CLOSE').subscribe(() => {
@@ -71,17 +70,21 @@ export class AdmobfreeService {
       this.admobFree.on('admob.rewardvideo.events.REWARD').subscribe(() => {
         this.admobFree.rewardVideo.prepare()
           .then(() => {
-            this.usersService.getToken().then((result) => {
-              token = result;
-              // (await this.toast.create({ message: this.token, position: 'bottom', duration: 1000 })).present();
-              this.usersService.addGrana(token).then((result: any) => {
-                this.presentConfirm(result.message);
-              });   
-            });
+            this.events.publish('atualizarGrana');
       });
-
-      this.admobFree.on('')
     });
+
+    this.admobFree.on(this.admobFree.events.REWARD_VIDEO_LOAD_FAIL).subscribe(()=>{
+      this.admob = false;
+    });
+
+    this.admobFree.on(this.admobFree.events.REWARD_VIDEO_LOAD).subscribe(()=>{
+      this.admob = true;
+    });
+  }
+
+  atualizarGrana() {
+    this.events.publish('upGrana');
   }
 
   async presentConfirm(valor) {
@@ -98,40 +101,66 @@ export class AdmobfreeService {
     alert.present();
   }
 
-  BannerAd() {
-    let bannerConfig: AdMobFreeBannerConfig = {
-      // isTesting: true, // Remove in production
-      autoShow: true, 
-      bannerAtTop: false,
-      // id: "ca-app-pub-3940256099942544/6300978111"//falsa
-      id: "ca-app-pub-4664613025046676/7070666383"
-    };
-    this.admobFree.banner.config(bannerConfig);
-    this.admobFree.banner.prepare().then(() => {
-      // success
-    }).catch(e => console.log(e));
-  }
-  
-  InterstitialAd() {
-    //Check if Ad is loaded
-    this.admobFree.interstitial.isReady().then(() => {
-      //Will show prepared Ad
-      this.admobFree.interstitial.show().then(() => {
-      })
-        .catch(e => console.log("show " + e));
-    })
-      .catch(e => console.log("isReady " + e));
-  }
-
   RewardVideoAd() {
-    //Check if Ad is loaded
+    console.log(this.reward);
+    if (this.reward == 0){
+      this.rewardvideoUnity(this.events);
+      this.reward=1;
+    }else if (this.reward == 1 && this.admob == true){
+    // //Check if Ad is loaded
     this.admobFree.rewardVideo.isReady().then(() => {
       //Will show prepared Ad
       this.admobFree.rewardVideo.show().then(() => {
       })
-        .catch(e => console.log("show " + e));
-    })
-      .catch(e => console.log(e));
+          .catch(e => this.rewardvideoUnity(this.events));
+      })
+        .catch(e => this.rewardvideoUnity(this.events));
+      this.reward-=1;
+    }else{
+      this.rewardvideoUnity(this.events);
+      this.reward-=1;
+    }
   }
 
+  rewardvideoAdmob(){
+    this.admobFree.rewardVideo.isReady().then(() => {
+      //Will show prepared Ad
+      this.admobFree.rewardVideo.show().then(() => {
+      })
+          .catch(e => console.log(e));
+      })
+        .catch(e => console.log(e));
+    }
+
+  rewardvideoUnity(events){
+  let rewardedVideoAdPlacementId = "reward01";
+    unityads2.GetPlacementState(rewardedVideoAdPlacementId,function callback(error, result){                 
+        if(result.split(",")[1] == '"READY"]'){
+            unityads2.ShowVideoAd(rewardedVideoAdPlacementId,function callback(error, result){           
+              if(error){
+                  console.log(error)
+              }
+              if(result.split(",")[1] == '"COMPLETED"]'){
+                  events.publish('atualizarGrana');
+              }
+          });
+        }else{
+          events.publish('abrirAdmob');
+        }
+    });
+  }
+
+
+  private newMethod() {
+    this.usersService.getToken().then((result) => {
+      var token = result;
+      this.usersService.addGrana(token).then((result: any) => {
+        let total = result.message;
+        total = Number(total).toFixed(4);
+        total = total.replace('.', ',');
+        this.presentConfirm(total);
+      });
+      this.atualizarGrana();
+    });
+  }
 }    

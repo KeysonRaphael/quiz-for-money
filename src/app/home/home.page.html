@@ -2,21 +2,21 @@
   <img src="../../assets/logo.png" width="100%" height="55%"/> 
   <ion-item>
     <ion-icon slot="start" name="at"></ion-icon>
-    <ion-input [(ngModel)]="email" required type="text" placeholder="Email"></ion-input>
+    <ion-input [(ngModel)]="email" required type="text" placeholder="E-mail"></ion-input>
   </ion-item><ion-item>
     <ion-icon slot="start" name="key"></ion-icon>
     <ion-input required [(ngModel)]="senha" type="password" placeholder="Senha"></ion-input>
   </ion-item>
-  <div class="row" style="margin-top: 5%;">
-    <div text-center class="col">
-      <ion-button size="small" text-center (click)="login()">Logar</ion-button>
-    </div>
+  <div style="margin-top: 5%;">
+    <ion-row text-center>
+      <ion-col><ion-button expand="block" text-center (click)="abrirRecuperar()">Esqueceu a senha?</ion-button></ion-col>
+      <ion-col><ion-button expand="block" text-center (click)="login()">Logar</ion-button></ion-col>
+    </ion-row>
   </div>
   <div class="row" style="margin-top: 5%;">
-    <div text-center class="col">
-      Ainda não possui cadastro?
+    <div text-center class="col" style="margin-top: 5%;">
+      Ainda não possui cadastro? clique <a routerLink="/cadastro">aqui</a>
       <br>
-      <ion-button size="small" style="margin-top: 5%;" routerLink="/cadastro">Cadastre-se</ion-button>
     </div>
   </div>
 </ion-content>

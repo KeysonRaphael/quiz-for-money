@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UsersService } from '../users.service';
-import { NavController, NavParams, ToastController } from '@ionic/angular';
+import { NavController, NavParams, ToastController, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
@@ -8,6 +8,7 @@ import { AppRate } from '@ionic-native/app-rate/ngx';
 // import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AlertController } from '@ionic/angular';
 import { Market } from '@ionic-native/market/ngx';
+import { RecuperarComponent } from './recuperar/recuperar.component';
 
 @Component({
   selector: 'app-home',
@@ -19,10 +20,13 @@ export class HomePage {
   public email;
   public senha;
   public loading;
-  public version = '017';
+  public version = '023';
   public atualizar = false;
 
-  constructor(private market: Market,private alertController: AlertController, private appRate: AppRate, public loadingController: LoadingController, private router: Router, private userProvider: UsersService, private toast: ToastController, private storage: Storage) {
+  constructor(private market: Market,private alertController: AlertController, private modalController: ModalController,
+    private appRate: AppRate, public loadingController: LoadingController, 
+    private router: Router, private userProvider: UsersService, 
+    private toast: ToastController, private storage: Storage) {
     this.model = new User();
     this.appRate.preferences = {
       simpleMode: true,
@@ -71,15 +75,20 @@ export class HomePage {
           this.atualizar=true;
           this.presentConfirm();
         }else{
-          this.userProvider.getToken().then((result)=>{
+          this.userProvider.getEmail().then((result)=>{
+            console.log(result);
             if (result){
-              this.router.navigateByUrl('/captcha');
+              this.login(true);
             }
           });
         }
       }
     });
-    
+  }
+
+  async abrirRecuperar(){
+    const subjectModal = await this.modalController.create({component:RecuperarComponent});
+    subjectModal.present();
   }
 
   async presentConfirm() {
@@ -99,33 +108,55 @@ export class HomePage {
     alert.present();
   }
 
-  login() {
+  login(sessao = false) {
     if(this.atualizar==false){
       this.presentLoading();
-      console.log(this.email);
-      this.model.email = this.email;
-      this.model.senha = this.senha;
-      this.userProvider.login(this.model.email, this.model.senha)
-      .then((result: any) => {
-        if (result.hasOwnProperty('token')) {
-          this.userProvider.setAccessToken(result.token).then((result) => {
-            console.log(result) // here's where my result can be logged, so whether my set succeeded or not
+      console.log(sessao);
+      this.carregarDados(sessao).then(() => {
+        this.userProvider.login(this.model.email, this.model.senha)
+          .then((result: any) => {
+            if (result.hasOwnProperty('token')) {
+              this.userProvider.setEmail(this.model.email).then((result) => {
+              });
+              this.userProvider.setSenha(this.model.senha).then((result) => {
+              });
+              this.userProvider.setAccessToken(result.token).then((result) => {
+                this.dismissLoading();
+              });
+              this.dismissLoading();
+              this.router.navigateByUrl('/captcha');  
+            }else{
+              alert('Conta não encontrada, por favor verifique se não digitou algum dado incorretamente.');
+              this.dismissLoading();
+            }
+          })
+          .catch((error: any) => {
+            alert('Erro ao efetuar login.');
             this.dismissLoading();
           });
-          this.dismissLoading();
-          this.router.navigateByUrl('/captcha');  
-        }else{
-          alert('Conta não encontrada, por favor verifique se não digitou algum dado incorretamente.');
-          this.dismissLoading();
-        }
-      })
-      .catch((error: any) => {
-        alert('Erro ao efetuar login.'+ error);
-        console.log(JSON.stringify(error));
-        this.dismissLoading();
       });
+      
     }else{
       this.presentConfirm()
+    }
+  }
+
+  private async carregarDados(sessao: boolean) {
+    if (sessao == true) {
+      this.userProvider.getEmail().then((result) => {
+        if (result) {
+          this.model.email = result;
+        }
+      });
+      await this.userProvider.getSenha().then((result) => {
+        if (result) {
+          this.model.senha = result;
+        }
+      });
+    }
+    else {
+      this.model.email = this.email;
+      this.model.senha = this.senha;
     }
   }
 

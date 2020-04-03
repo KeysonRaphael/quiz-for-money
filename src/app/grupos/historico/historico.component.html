@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-row>
+    <ion-col>
+      <ion-button (click)="voltar()" style="text-align: right;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col text-center>
+      <h3>Histórico</h3>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col>
+    </ion-col>
+  </ion-row>
+</ion-header>
+<ion-content>
+  <ion-list *ngFor="let grupo of historico">
+    <ion-item color="warning" *ngIf="grupo.status == 2" (click)="mostrarResultado(grupo.sorteado)">
+        <ion-col><b>{{grupo.data_compra}}</b></ion-col>
+        <ion-col><b>R${{grupo.premio}}</b></ion-col>
+        <ion-col class="ion-text-center"><b>Finalizado</b></ion-col>
+    </ion-item>
+    <ion-item color="success" *ngIf="grupo.status == 1">
+      <ion-col><b>{{grupo.data_compra}}</b></ion-col>
+      <ion-col><b>R${{grupo.premio}}</b></ion-col>
+      <ion-col class="ion-text-center"><b>Em Andamento</b></ion-col>
+    </ion-item>
+  </ion-list>
+</ion-content>

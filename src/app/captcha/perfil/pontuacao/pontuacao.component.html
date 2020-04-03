@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-row>
+    <ion-col>
+      <ion-button (click)="voltar()" style="text-align: right;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col text-center>
+      <h3>PONTUAÇÃO</h3>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col>
+    </ion-col>
+  </ion-row>
+</ion-header>
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-card>
+        <ion-row text-center>
+          <ion-col>
+            <ion-card color="secondary">
+              <h6>Geral</h6>
+              <h6>{{geral}}</h6>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card color="secondary"> 
+              <h6>Mensal</h6>
+              <h6>{{mensal}}</h6>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card color="secondary" text-center >
+              <h6>Nivel</h6>
+              <h6>{{nivel}}</h6>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row text-center>
+    <ion-col>
+      <ion-button expand="full" (click)="openUrl()">
+        Tabela de Ganhos
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

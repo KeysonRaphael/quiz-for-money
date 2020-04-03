@@ -1,19 +1,35 @@
 <ion-content>
-    <ion-img src="../../assets/35221.jpg"></ion-img>
+    <ion-img src="../../assets/35221.jpg" style="height: 25%;" ></ion-img>
     <ion-item>
         <ion-icon slot="start" name="person"></ion-icon>
-        <ion-input [(ngModel)]="nome" required type="text" placeholder="Nome"></ion-input>
+        <ion-input [(ngModel)]="nome" required type="text" placeholder="Nome*"></ion-input>
       </ion-item>   
     <ion-item>
       <ion-icon slot="start" name="at"></ion-icon>
-      <ion-input [(ngModel)]="email" required type="text" placeholder="Email"></ion-input>
+      <ion-input [(ngModel)]="email" required type="text" placeholder="Email*"></ion-input>
     </ion-item><ion-item>
       <ion-icon slot="start" name="key"></ion-icon>
-      <ion-input required [(ngModel)]="senha" type="password" placeholder="Senha"></ion-input>
+      <ion-input required [(ngModel)]="senha" type="password" placeholder="Senha*"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-icon slot="start" name="key"></ion-icon>
-        <ion-input required [(ngModel)]="rsenha" type="password" placeholder="Repita a senha"></ion-input>
+      <ion-icon slot="start" name="key"></ion-icon>
+      <ion-input required [(ngModel)]="rsenha" type="password" placeholder="Repita a senha*"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="key"></ion-icon>
+      <ion-input required [(ngModel)]="mestre" type="text" placeholder="Codigo de Indicação"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-checkbox (click)="aceitar()"></ion-checkbox></ion-col>
+        <ion-col size="10">
+            Li e aceito os 
+            <a href="https://docs.google.com/document/d/1G_aSIToBSa1bXCcg-8VFkgR0-wI5LqS8Y1uJQs0Wex0/edit?usp=sharing">Termos de uso</a> e a 
+            <a href="https://docs.google.com/document/d/1zXXT2fGeomntLLFmhPW-lVEck7xKf99zl9xSUV3eFfI/edit?usp=sharing">Politica de Privacidade</a>.
+        </ion-col>
+      </ion-row>
+      
       </ion-item>
     <div class="row" style="margin-top: 5%;">
       <div text-center class="col">

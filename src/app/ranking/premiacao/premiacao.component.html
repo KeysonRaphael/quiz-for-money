@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-row>
+    <ion-col>
+      <ion-button (click)="voltar()" style="text-align: right;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col text-center>
+      <h3>PRÊMIAÇÃO</h3>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title text-center>1º Lugar<br> <h6>{{titulo1}}</h6></ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col size="6"><img src="http://157.245.38.22/primeiro.jpg"/></ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      {{descricao1}}
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title text-center>2º Lugar<br> <h6>{{titulo2}}</h6></ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col size="6"><img src="http://157.245.38.22/segundo.jpg"/></ion-col>
+        <ion-col></ion-col>
+      </ion-row>  
+      {{descricao2}}
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title text-center>3º Lugar<br> <h6>{{titulo3}}</h6></ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col size="6"><img src="http://157.245.38.22/terceiro.jpg"/></ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      {{descricao3}}
+    </ion-card-content>
+  </ion-card>
+</ion-content>

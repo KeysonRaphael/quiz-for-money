@@ -4,6 +4,9 @@ import { Events, ToastController } from '@ionic/angular';
 import { AdmobfreeService } from '../admobfree.service';
 import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { HistoricoComponent } from './historico/historico.component';
+import { ModalController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-carteira',
@@ -21,11 +24,17 @@ export class CarteiraPage implements OnInit {
   public loading;
 
 
-  constructor(private alertController: AlertController,public loadingController: LoadingController,private zone: NgZone, public events: Events, private usersService: UsersService) { }
+  constructor(public modalCtrl: ModalController,private alertController: AlertController,public loadingController: LoadingController,
+    private zone: NgZone, public events: Events, private usersService: UsersService) { }
 
   ngOnInit() {
     this.getgrana();
     this.getValor();
+  }
+
+  async abrirHistorico(){
+    const subjectModal = await this.modalCtrl.create({component:HistoricoComponent});
+    subjectModal.present();
   }
 
   private getgrana() {
@@ -34,6 +43,8 @@ export class CarteiraPage implements OnInit {
       this.usersService.getGrana(this.token).then((result: any) => {
         this.zone.run(() => {
           this.total = result.money;
+          this.total = Number(this.total).toFixed(4)
+          this.total = this.total.replace('.',',')
         });
       });
     });
@@ -43,6 +54,8 @@ export class CarteiraPage implements OnInit {
     this.usersService.getValor().then((result: any) => {
       this.zone.run(() => {
         this.valor = result.message;
+        this.valor = Number(this.valor).toFixed(4)
+        this.valor = this.valor.replace('.',',')
       });
     });
   }
@@ -51,6 +64,9 @@ export class CarteiraPage implements OnInit {
     switch (value) {
       case "Mercado Pago":
         this.placeholder = "Email do Mercado Pago.";
+        break;
+      case "PayPal":
+        this.placeholder = "Email do PaylPal.";
         break;
       case "PicPay":
         this.placeholder = "Conta do picpay. ex: @teste";
@@ -69,6 +85,9 @@ export class CarteiraPage implements OnInit {
       return;
     }else if (this.conta[0] == "@" && this.formap == "Mercado Pago") {
       this.presentConfirm("Contas Mercado Pago são em formato de e-mail!");
+      return;
+    }else if (this.conta[0] == "@" && this.formap == "PayPal") {
+      this.presentConfirm("Contas PayPal são em formato de e-mail!");
       return;
     }else if (this.conta[0] != "@" && this.formap == "PicPay") {
       this.presentConfirm("Contas PicPay iniciam com @");
@@ -94,10 +113,15 @@ export class CarteiraPage implements OnInit {
       this.usersService.retirarDinheiro(this.token,this.value,date,this.formap,this.conta).then((result: any) => {
           alert(result.message);
           this.getgrana();
+          this.atualizarGrana();
           this.dismissLoading();
       });
     });
     this.dismissLoading();
+  }
+
+  atualizarGrana() {
+    this.events.publish('upGrana');
   }
 
   async presentConfirm(mensagem) {

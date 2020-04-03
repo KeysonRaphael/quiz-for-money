@@ -1,59 +1,61 @@
+<ion-header>
+  <ion-row>
+    <ion-col>
+      <ion-button (click)="voltar()" style="text-align: right;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col text-center>
+      <h3>Assuntos</h3>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col>
+    </ion-col>
+  </ion-row>
+</ion-header>
 <ion-content>
   <ion-grid>
     <ion-row text-center>
       <ion-col size="6">
-        <ion-card>
-          <ion-card-content text-center>
-            <ion-item lines="none" text-center (click)="escolher(6)"><ion-label class="my-label">Nerd</ion-label></ion-item>
-          </ion-card-content>
+        <ion-card (click)="escolher(6)">
+          <img src="../../assets/N QuizForMoney.png"/>
         </ion-card>  
       </ion-col>
       <ion-col size="6">
-        <ion-card>
-          <ion-card-content text-center>
-            <ion-item lines="none" text-center no-lines (click)="escolher(1)"><ion-label class="my-label">Matemática</ion-label></ion-item>
-          </ion-card-content>
-        </ion-card> 
+        <ion-card (click)="escolher(1)">
+          <img src="../../assets/M QuizForMoney.png"/>
+        </ion-card>
       </ion-col>
     </ion-row>
     <ion-row text-center>
       <ion-col size="6">
-        <ion-card>
-          <ion-card-content text-center>
-            <ion-item lines="none" text-center no-lines (click)="escolher(2)"><ion-label class="my-label">Português</ion-label></ion-item>
-          </ion-card-content>
-        </ion-card> 
+        <ion-card (click)="escolher(2)">
+          <img src="../../assets/P QuizForMoney.png"/>
+        </ion-card>
       </ion-col>
       <ion-col size="6">
-        <ion-card>
-          <ion-card-content text-center>
-            <ion-item lines="none" text-center no-lines (click)="escolher(3)"><ion-label class="my-label">Biologia</ion-label></ion-item>
-          </ion-card-content>
+        <ion-card (click)="escolher(3)">
+            <img src="../../assets/B QuizForMoney.png"/>
         </ion-card>
       </ion-col>  
     </ion-row>
     <ion-row text-center>
       <ion-col size="6">
-        <ion-card>
-          <ion-card-content text-center>
-            <ion-item lines="none" text-center no-lines (click)="escolher(4)"><ion-label class="my-label">Geografia</ion-label></ion-item>
-          </ion-card-content>
+        <ion-card (click)="escolher(4)">
+          <img src="../../assets/G QuizForMoney.png"/>
         </ion-card>
       </ion-col>
       <ion-col size="6">
-        <ion-card>
-          <ion-card-content text-center>
-            <ion-item lines="none" text-center no-lines (click)="escolher(5)"><ion-label class="my-label">História</ion-label></ion-item>
-          </ion-card-content>
+        <ion-card (click)="escolher(5)">
+          <img src="../../assets/H QuizForMoney.png"/>
         </ion-card>
       </ion-col>
     </ion-row>
     <ion-row text-center>
       <ion-col size="6">
-        <ion-card>
-          <ion-card-content text-center>
-            <ion-item lines="none" text-center no-lines (click)="escolher(0)"><ion-label class="my-label">Todos</ion-label></ion-item>
-          </ion-card-content>
+        <ion-card (click)="escolher('0')">
+          <img src="../../assets/T QuizForMoney.png"/>
         </ion-card>
       </ion-col>
     </ion-row>    

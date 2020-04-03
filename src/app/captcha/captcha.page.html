@@ -1,15 +1,37 @@
 <ion-header>
   <ion-row>
     <ion-col align-self-center>
-      R${{total}}
+      <ion-button expand="full" (click)="abrirPerfil()" style="text-align: right;">
+        <ion-icon name="person"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col text-center>
+      <ion-button expand="full" (click)="abrirGrupos()" style="text-align: right;">
+        <ion-icon name="cash"></ion-icon>
+        GRUPOS
+        <ion-icon name="cash"></ion-icon>
+      </ion-button>
     </ion-col>
     <ion-col text-right>
-        <ion-button routerLink="/duvidas" style="text-align: right;">
+        <ion-button expand="full" routerLink="/duvidas" style="text-align: right;">
           <ion-icon name="help"></ion-icon>
         </ion-button>
-        <ion-button routerLink="/carteira" style="text-align: right;">
-            <ion-icon name="wallet"></ion-icon>
-        </ion-button>
+        
+    </ion-col>
+  </ion-row>
+  <ion-row text-center>
+    <ion-col>
+      <ion-button expand="full" (click)="abrirRank()" style="text-align: right;">
+      <ion-icon name="trophy"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <b><h5>R${{total}}</h5></b>
+    </ion-col>
+    <ion-col>
+      <ion-button expand="full" routerLink="/carteira" style="text-align: right;">
+      <ion-icon name="wallet"></ion-icon>
+      </ion-button>
     </ion-col>
   </ion-row>
 </ion-header>

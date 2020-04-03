@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-row>
+    <ion-col>
+      <ion-button (click)="voltar()" style="text-align: right;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col text-center>
+      <h3>Histórico</h3>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+</ion-header>
+<ion-content>
+  <ion-list *ngFor="let pagamento of historico">
+    <ion-item color="success" *ngIf="pagamento.status == 'pago'">
+      <!-- <b></b>
+      <ion-label></ion-label>
+      <b></b> -->
+        <ion-col><b>{{pagamento.data}}</b></ion-col>
+        <ion-col><b>R${{pagamento.valor}}</b></ion-col>
+        <ion-col class="ion-text-center"><b>{{pagamento.status}}</b></ion-col>
+    </ion-item>
+    <ion-item color="tertiary" *ngIf="pagamento.status == 'aguardando pagamento'">
+        <ion-col><b>{{pagamento.data}}</b></ion-col>
+        <ion-col><b>R${{pagamento.valor}}</b></ion-col>
+        <ion-col class="ion-text-center"><b>{{pagamento.status}}</b></ion-col>
+    </ion-item>
+    <ion-item color="danger" *ngIf="pagamento.status == 'ocorreu um erro no pagamento'">
+        <ion-col><b>28/02/2020</b></ion-col>
+        <ion-col><b>R$3.00</b></ion-col>
+        <ion-col class="ion-text-center"><b>{{pagamento.status}}</b></ion-col>
+    </ion-item>
+  </ion-list>
+</ion-content>

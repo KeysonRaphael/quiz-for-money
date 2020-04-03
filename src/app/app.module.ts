@@ -23,13 +23,26 @@ import { AppRate } from '@ionic-native/app-rate/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { Market } from '@ionic-native/market/ngx';
 
-
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AssuntosComponent} from './assuntos/assuntos.component';
+import { RankingComponent } from './ranking/ranking.component';
+import { DuvidasComponent } from './ranking/duvidas/duvidas.component';
+import { PremiacaoComponent } from './ranking/premiacao/premiacao.component';
+import { HistoricoComponent } from './carteira/historico/historico.component';
+import { PerfilComponent } from './captcha/perfil/perfil.component';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { PontuacaoComponent } from './captcha/perfil/pontuacao/pontuacao.component';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { CelularComponent } from './captcha/perfil/cadastro/celular/celular.component';
+import { EnderecoComponent } from './captcha/perfil/cadastro/endereco/endereco.component';
+import { RecuperarComponent } from './home/recuperar/recuperar.component';
+import { GruposComponent } from './grupos/grupos.component';
+import { HistoricoGrupoComponent } from './grupos/historico/historico.component';
 
 @NgModule({
-  declarations: [AppComponent,AssuntosComponent],
-  entryComponents: [AssuntosComponent],
+  declarations: [AppComponent,AssuntosComponent,RankingComponent,DuvidasComponent,RecuperarComponent,
+    PremiacaoComponent,GruposComponent,HistoricoGrupoComponent,HistoricoComponent,PerfilComponent,PontuacaoComponent,CelularComponent,EnderecoComponent],
+  entryComponents: [AssuntosComponent,GruposComponent,HistoricoGrupoComponent,RankingComponent,DuvidasComponent,RecuperarComponent,PremiacaoComponent,CelularComponent,EnderecoComponent,PontuacaoComponent,PerfilComponent,HistoricoComponent],
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     BrMaskerModule,
     IonicStorageModule.forRoot()],
@@ -39,8 +52,8 @@ import { AssuntosComponent} from './assuntos/assuntos.component';
     AdMobFree,
     AdmobfreeService,Dialogs,HTTP,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, 
-    AppRate,
-    LocalNotifications,Market,
+    AppRate,InAppBrowser,
+    LocalNotifications,Market,SocialSharing,
     OneSignal
   ],
   bootstrap: [AppComponent]
