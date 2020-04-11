@@ -19,6 +19,8 @@ export class PerfilComponent implements OnInit {
   celular = "";
   nome = "";
   email = "";
+  idade = "";
+  sexo = "";
   constructor(public navCtrl: NavController,private socialSharing: SocialSharing, public events: Events,
     public loadingController: LoadingController,public modalCtrl: ModalController, 
     public userService : UsersService,private zone: NgZone) {
@@ -89,6 +91,8 @@ export class PerfilComponent implements OnInit {
           this.nome = result.nome;
           this.email = result.email;
           this.codigo = result.codigo;
+          this.sexo = result.sexo;
+          this.idade = result.idade;
           this.dismissLoading()
         });
       });

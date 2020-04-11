@@ -12,6 +12,8 @@ import {ToastController } from '@ionic/angular';
 import { CaptchaPage } from './captcha/captcha.page';
 import { Events } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 declare var unityads2:any;
 
 
@@ -21,6 +23,11 @@ declare var unityads2:any;
 export class AdmobfreeService {
   reward = 0;
   admob = true;
+  Adfly = 5;
+  Shortest = 5;
+  shortestUrl = 'http://gestyy.com/w9kmly';
+  adflyUrl = 'http://raboninco.com/8TSY';
+
   //unity
   //admob
   //Reward Video Ad's Configurations
@@ -33,7 +40,7 @@ export class AdmobfreeService {
 
   constructor(private alertController: AlertController,private admobFree: AdMobFree,
     public platform: Platform, public events: Events, private dialogs: Dialogs, 
-    private toast: ToastController, private usersService: UsersService) {
+    private toast: ToastController, private usersService: UsersService,public inAppBrowser:InAppBrowser) {
       events.subscribe('atualizarGrana', (user, time) => {
         this.newMethod();
       });
@@ -42,14 +49,6 @@ export class AdmobfreeService {
       });
 
       platform.ready().then(() => {
-        document.addEventListener('startappads.reward_video.reward', () => {
-          this.newMethod();
-        });
-        
-        document.addEventListener('startappads.reward_video.load_fail', () => {
-          this.rewardvideoUnity(events);
-        });
-    
         // Load ad configuration
         this.admobFree.rewardVideo.config(this.RewardVideoConfig);
         //Prepare Ad to Show
@@ -101,8 +100,32 @@ export class AdmobfreeService {
     alert.present();
   }
 
+  async presentMessage(msg) {
+    let alert = await this.alertController.create({
+      message: msg,
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel',
+        }
+      ],
+      backdropDismiss: false
+    });
+    alert.present();
+  }
+
   RewardVideoAd() {
-    console.log(this.reward);
+    if (this.Adfly > 0) {
+      this.Adfly -= 1;
+      alert("Aguarde o tempo informado na tela e depois clique em fechar propaganda!");
+      this.redirectReward(this.adflyUrl);
+      return;
+    }else if(this.Shortest > 0){
+      this.Shortest -= 1;
+      alert("Aguarde o tempo informado na tela e depois clique em fechar propaganda!");
+      this.redirectReward(this.shortestUrl);
+      return;
+    }
     if (this.reward == 0){
       this.rewardvideoUnity(this.events);
       this.reward=1;
@@ -148,6 +171,25 @@ export class AdmobfreeService {
           events.publish('abrirAdmob');
         }
     });
+  }
+
+  private redirectReward(url:string){
+    const browser = this.inAppBrowser.create(url);
+    browser.on('loadstart').subscribe(event => {
+    if (event.url.includes('www.google.com')) {
+      this.usersService.getToken().then((result) => {
+        var token = result;
+        this.usersService.addGrana(token).then((result: any) => {
+          let total = result.message;
+          total = Number(total).toFixed(4);
+          total = total.replace('.', ',');
+          this.presentConfirm(total);
+        });
+        this.atualizarGrana();
+      });
+      browser.close()
+    }
+    })
   }
 
 

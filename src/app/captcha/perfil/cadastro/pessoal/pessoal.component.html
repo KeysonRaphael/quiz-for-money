@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-row>
+    <ion-col>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col text-center>
+      <h3>Dados Pessoais</h3>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col>
+    </ion-col>
+  </ion-row>
+</ion-header>
+<ion-content>
+<ion-item>
+  <ion-input required [brmasker]="{mask:'00/00/0000', len:10}" id="data" type="text" placeholder="Data de Nascimento"></ion-input>
+</ion-item >
+<ion-item>
+  <ion-label>Sexo</ion-label>
+  <ion-select style="width: 100%;" required id="sexo" (ionChange)="changeSexo($event.target.value)">
+    <ion-select-option value="M">Masculino</ion-select-option>
+    <ion-select-option value="F">Feminino</ion-select-option>
+  </ion-select>
+</ion-item>
+  <ion-row text-center  style="margin-top: 5%;">
+    <ion-col></ion-col>
+    <ion-col><ion-button (click)="atualizar()">Cadastrar Dados</ion-button></ion-col>
+  <ion-col></ion-col>
+  </ion-row>
+</ion-content>

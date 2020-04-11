@@ -136,6 +136,39 @@ export class UsersService {
     });
   }
 
+  async getAnuncio(token:string) {
+    return new Promise((resolve, reject) => {
+      var data = {
+        token: token
+      };
+ 
+      this.http.post(this.API_URL + 'anuncio', data)
+        .subscribe((result: any) => {
+          resolve(result);
+        },
+        (error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async minAnuncio(token:string,id:string) {
+    return new Promise((resolve, reject) => {
+      var data = {
+        token: token,
+        anuncio:id
+      };
+ 
+      this.http.post(this.API_URL + 'anuncioVisualizado', data)
+        .subscribe((result: any) => {
+          resolve(result);
+        },
+        (error) => {
+          reject(error);
+        });
+    });
+  }
+
   async cadastrarCelular(token:string,telefone:string) {
     return new Promise((resolve, reject) => {
       var data = {
@@ -144,6 +177,24 @@ export class UsersService {
       };
  
       this.http.put(this.API_URL + 'telefone', data)
+        .subscribe((result: any) => {
+          resolve(result);
+        },
+        (error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async cadastrarNascSexo(token:string,date:string,sexo:string) {
+    return new Promise((resolve, reject) => {
+      var data = {
+        token: token,
+        data:date,
+        sexo:sexo
+      };
+ 
+      this.http.put(this.API_URL + 'nasc&sexo', data)
         .subscribe((result: any) => {
           resolve(result);
         },

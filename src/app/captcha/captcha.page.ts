@@ -14,6 +14,10 @@ import { AssuntosComponent } from '../assuntos/assuntos.component';
 import { RankingComponent } from '../ranking/ranking.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { GruposComponent } from '../grupos/grupos.component';
+import { AnuncioLinkComponent } from '../anuncio-link/anuncio-link.component';
+import { EnderecoComponent } from './perfil/cadastro/endereco/endereco.component';
+import { CelularComponent } from './perfil/cadastro/celular/celular.component';
+import { PessoalComponent } from './perfil/cadastro/pessoal/pessoal.component';
 
 
 
@@ -67,6 +71,32 @@ export class CaptchaPage implements OnInit {
       }
     );
     this.getgrana();
+    this.validarDados();
+  }
+
+  private validarDados(){
+    this.usersService.getToken().then((result) => {
+      var token = result;
+      this.usersService.getPerfil(token).then(async (result: any) => {
+          if(result.rua == undefined || result.rua == ''){
+            const subjectModal = await this.modalController.create({component:EnderecoComponent});
+            subjectModal.present();
+          }
+          if(result.telefone == undefined || result.telefone == ''){
+            const subjectModal = await this.modalController.create({component:CelularComponent});
+            subjectModal.present();
+          }
+          if(result.sexo  == 'NULL'){
+            const subjectModal = await this.modalController.create({component:PessoalComponent});
+            subjectModal.present();
+          }
+          if(result.idade == 'NULL'){
+            const subjectModal = await this.modalController.create({component:PessoalComponent});
+            subjectModal.present();
+          }
+          this.dismissLoading()
+        });
+      });
   }
 
   private getgrana() {
@@ -184,6 +214,11 @@ export class CaptchaPage implements OnInit {
     subjectModal.present();
   }
 
+  async abrirAnuncio(){
+    const subjectModal = await this.modalController.create({component:AnuncioLinkComponent});
+    subjectModal.present();
+  }
+
   async abrirGrupos(){
     const subjectModal = await this.modalController.create({component:GruposComponent});
     subjectModal.present();
@@ -230,7 +265,7 @@ export class CaptchaPage implements OnInit {
       if (this.erro == 3){
         this.erro = 0;
       }
-      this.presentConfirm("<p>Resposta Incorreta</p> <p>A resposta correta é: "+this.answer+"</p>");
+      this.presentConfirm("<p>Resposta Incorreta</p> <p>A resposta correta é: "+this.answer+"</p>",2);
     }
   }
 
@@ -249,6 +284,9 @@ export class CaptchaPage implements OnInit {
           handler: () => {
             if (nq == 1) {
               this.showRewardVideo()
+            }
+            if (nq == 2){
+              this.abrirAnuncio()
             }
             this.gerarPergunta()
           }

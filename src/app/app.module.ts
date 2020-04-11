@@ -38,11 +38,13 @@ import { EnderecoComponent } from './captcha/perfil/cadastro/endereco/endereco.c
 import { RecuperarComponent } from './home/recuperar/recuperar.component';
 import { GruposComponent } from './grupos/grupos.component';
 import { HistoricoGrupoComponent } from './grupos/historico/historico.component';
+import { AnuncioLinkComponent } from './anuncio-link/anuncio-link.component';
+import { PessoalComponent } from './captcha/perfil/cadastro/pessoal/pessoal.component';
 
 @NgModule({
-  declarations: [AppComponent,AssuntosComponent,RankingComponent,DuvidasComponent,RecuperarComponent,
+  declarations: [PessoalComponent,AnuncioLinkComponent,AppComponent,AssuntosComponent,RankingComponent,DuvidasComponent,RecuperarComponent,
     PremiacaoComponent,GruposComponent,HistoricoGrupoComponent,HistoricoComponent,PerfilComponent,PontuacaoComponent,CelularComponent,EnderecoComponent],
-  entryComponents: [AssuntosComponent,GruposComponent,HistoricoGrupoComponent,RankingComponent,DuvidasComponent,RecuperarComponent,PremiacaoComponent,CelularComponent,EnderecoComponent,PontuacaoComponent,PerfilComponent,HistoricoComponent],
+  entryComponents: [PessoalComponent,AnuncioLinkComponent,AssuntosComponent,GruposComponent,HistoricoGrupoComponent,RankingComponent,DuvidasComponent,RecuperarComponent,PremiacaoComponent,CelularComponent,EnderecoComponent,PontuacaoComponent,PerfilComponent,HistoricoComponent],
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     BrMaskerModule,
     IonicStorageModule.forRoot()],
